@@ -1,0 +1,34 @@
+# --- Terraform ---
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+crash.log
+.terraform/
+*.tfplan
+*.tfvars
+*.tfvars.json
+!*.tfvars.example
+.tflint.d/
+
+# --- OS and IDEs ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# --- Logs y temp ---
+*.log
+
+# Pre-commit
+.pre-commit/
+
+# LocalStack
+./Volume
+
+# DevContainer
+.vscode/
+.devcontainer/.vscode/
+.aws/
+credentials
+.env
