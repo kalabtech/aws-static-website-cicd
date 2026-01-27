@@ -19,6 +19,9 @@ Closes #1
 -
 -
 
+# Documentation
+-
+
 <details>
 <summary>Click to expand Terraform Plan Output</summary>
 

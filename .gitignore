@@ -2,13 +2,13 @@
 *.tfstate
 *.tfstate.*
 *.tfstate.backup
-crash.log
 .terraform/
 *.tfplan
 *.tfvars
 *.tfvars.json
 !*.tfvars.example
 .tflint.d/
+backend.hcl
 
 # --- OS and IDEs ---
 .DS_Store
@@ -19,6 +19,7 @@ Thumbs.db
 
 # --- Logs y temp ---
 *.log
+crash.log
 
 # Pre-commit
 .pre-commit/

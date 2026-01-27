@@ -1,5 +1,5 @@
 {
-    "name": "github-management",
+    "name": "static-website-cicd",
     "build": { "dockerfile": "Dockerfile" },
     //Added to avoid architecture conflicts if using emulation
     "runArgs": ["--platform", "linux/arm64"],
@@ -15,7 +15,8 @@
                 "yzhang.markdown-all-in-one",
                 "eamodio.gitlens",
                 "github.vscode-pull-request-github",
-                "anthropic.claude-code"
+                "anthropic.claude-code",
+                "pkief.material-icon-theme"
             ]
         }
     },
