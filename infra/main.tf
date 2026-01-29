@@ -1,11 +1,37 @@
+## Policy Data
+data "aws_iam_policy_document" "static-policy" {
+  version = "2012-10-17"
+
+  statement {
+    sid    = "StaticWebsiteSecureTransport"
+    effect = "Deny"
+    principals {
+      type        = "*"
+      identifiers = ["*"]
+    }
+    actions = ["s3:*"]
+    resources = [
+      aws_s3_bucket.static-s3.arn,
+      "${aws_s3_bucket.static-s3.arn}/*",
+    ]
+    condition {
+      variable = "aws:SecureTransport"
+      test     = "Bool"
+      values   = ["false"]
+    }
+  }
+}
+
 ## S3 - bucket
 resource "aws_s3_bucket" "static-s3" {
   bucket = "kalabtech-static-website"
 
-  tags = {
-    Name        = "static-website"
-    Environment = "Dev"
-  }
+  tags = merge(
+    local.common_tags,
+    {
+      Name = "static-website"
+    }
+  )
 }
 
 resource "aws_s3_bucket_public_access_block" "static-block" {
@@ -25,10 +51,10 @@ resource "aws_s3_bucket_versioning" "static-versioning" {
   }
 }
 
-# NOTE: Next Commit
-# resource "aws_s3_bucket_policy" "static-policy" {
-#   bucket = aws_s3_bucket.static-s3.id
-# }
+resource "aws_s3_bucket_policy" "static-policy" {
+  bucket = aws_s3_bucket.static-s3.id
+  policy = data.aws_iam_policy_document.static-policy.json
+}
 
 resource "aws_s3_bucket_ownership_controls" "static-ownership" {
   bucket = aws_s3_bucket.static-s3.id
