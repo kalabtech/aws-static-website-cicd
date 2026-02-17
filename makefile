@@ -4,7 +4,7 @@ DOCS_DIR    = ./docs/obsidian
 MOD_DIR     = ./modules
 STATE_FILE  = dev.tfplan
 
-.PHONY: all verify-identity init plan apply destroy state checkfiles check security prec prec-all docs help
+.PHONY: all verify-identity init plan apply destroy state checktf check security prec prec-all docs help
 
 # Default action
 all: security fmt check plan
@@ -44,12 +44,12 @@ state: ## Shows tfstate
 
 ## --- QUALITY AND SECURITY ---
 
-checkfiles: ## Format and Validation Terraform code
+checktf: ## Format and Validation Terraform code
 	@echo "Formatting code..."
 	@terraform fmt -recursive $(MOD_DIR)
 	@terraform fmt -recursive $(TF_DIR)
 	@echo "Validating code..."
-	@cd $(TF_DIR) && terraform validate
+	@cd $(MOD_DIR) && terraform validate
 	@cd $(TF_DIR) && terraform validate
 
 check: ## Linting and syntax validation
