@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - fix/github-actions-permissions
 
 jobs:
   deploy:
