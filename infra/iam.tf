@@ -35,16 +35,25 @@ resource "aws_iam_role" "github_actions" {
 # Permissions Policy
 data "aws_iam_policy_document" "github_actions_permissions" {
   statement {
-    sid    = "S3DeployPermissions"
+    sid    = "S3ObjectPermissions"
     effect = "Allow"
     actions = [
       "s3:PutObject",
-      "s3:DeleteObject",
+      "s3:DeleteObject"
+    ]
+    resources = [
+      "${aws_s3_bucket.static-s3.arn}/*"
+    ]
+  }
+
+  statement {
+    sid    = "S3ListBucket"
+    effect = "Allow"
+    actions = [
       "s3:ListBucket"
     ]
     resources = [
-      aws_s3_bucket.static-s3.arn,
-      "${aws_s3_bucket.static-s3.arn}/*"
+      aws_s3_bucket.static-s3.arn
     ]
   }
 
@@ -62,6 +71,7 @@ data "aws_iam_policy_document" "github_actions_permissions" {
 
 # Attach Policy to Role
 resource "aws_iam_role_policy" "github_actions" {
+  name   = "github-actions-deploy-role"
   role   = aws_iam_role.github_actions.id
   policy = data.aws_iam_policy_document.github_actions_permissions.json
 }

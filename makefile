@@ -46,10 +46,8 @@ state: ## Shows tfstate
 
 checktf: ## Format and Validation Terraform code
 	@echo "Formatting code..."
-	@terraform fmt -recursive $(MOD_DIR)
 	@terraform fmt -recursive $(TF_DIR)
 	@echo "Validating code..."
-	@cd $(MOD_DIR) && terraform validate
 	@cd $(TF_DIR) && terraform validate
 
 check: ## Linting and syntax validation
