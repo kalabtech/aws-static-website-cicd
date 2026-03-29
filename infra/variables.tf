@@ -15,3 +15,8 @@ variable "aws_region" {
   description = "AWS Region for provider"
   type        = string
 }
+
+variable "bucket_name" {
+  description = "Static website s3 bucket name"
+  type        = string
+}
