@@ -3,12 +3,33 @@ module "s3" {
   bucket_name = var.bucket_name
 
   enable_versioning                  = true
+  enforce_ssl                        = false
   noncurrent_version_expiration_days = 7
 }
 
 # NOTE: Cloudfront bucket Policy
 data "aws_iam_policy_document" "this" {
-  version = "2012-10-17"
+  statement {
+    sid    = "DenyInsecureTransport"
+    effect = "Deny"
+
+    principals {
+      type        = "*"
+      identifiers = ["*"]
+    }
+
+    actions = ["s3:*"]
+    resources = [
+      module.s3.bucket.arn,
+      "${module.s3.bucket.arn}/*",
+    ]
+    condition {
+      test     = "Bool"
+      variable = "aws:SecureTransport"
+      values   = ["false"]
+    }
+  }
+
   statement {
     sid    = "AllowCloudfrontServicePrincipal"
     effect = "Allow"
