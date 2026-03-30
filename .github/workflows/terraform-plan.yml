@@ -52,7 +52,7 @@ jobs:
           TF_VAR_environment: ${{ vars.TF_VAR_ENVIRONMENT }}
           TF_VAR_project_name: ${{ vars.TF_VAR_PROJECT_NAME }}
           TF_VAR_aws_region: ${{ vars.TF_VAR_AWS_REGION }}
-          TF_VAR_aws_bucket_name: ${{ secrets.TF_VAR_BUCKET_NAME }}
+          TF_VAR_bucket_name: ${{ secrets.TF_VAR_BUCKET_NAME }}
         id: plan
         run: terraform plan -input=false -no-color -out=prod.tfplan 2>&1 | tee prod_plan.log > /dev/null
 
