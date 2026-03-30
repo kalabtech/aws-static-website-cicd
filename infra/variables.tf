@@ -20,3 +20,9 @@ variable "bucket_name" {
   description = "Static website s3 bucket name"
   type        = string
 }
+
+variable "price_class" {
+  type        = string
+  description = "Cloudfront distribution price class"
+  default     = "PriceClass_100"
+}

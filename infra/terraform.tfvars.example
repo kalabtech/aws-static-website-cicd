@@ -1,7 +1,8 @@
-# environments/prod.tfvars.example
-# Copy to prod.tfvars and fill in your values
+# environments/terraform.tfvars.example
+# Copy to terraform.tfvars and fill in your values
 
-environment    = "prod"
-project_name   = "your-project-name"
-aws_region     = "your-aws-region"
-bucket_name = "your-bucket-name"
+environment       = "environment"
+project_name      = "your-project-name"
+aws_region        = "your-aws-region"
+bucket_name       = "your-bucket-name"
+price_class       = "your-price_class"

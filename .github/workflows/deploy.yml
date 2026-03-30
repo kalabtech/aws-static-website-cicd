@@ -1,0 +1,36 @@
+name: Deploy Static Website
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: prod
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_PROD_ROLE_DEPLOY }}
+          aws-region: ${{ vars.TF_VAR_AWS_REGION }}
+
+      - name: Sync files to S3
+        run: |
+          aws s3 sync ./website s3://${{ secrets.TF_VAR_BUCKET_NAME }}/ \
+            --delete
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.TF_VAR_CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"
